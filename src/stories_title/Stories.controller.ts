@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { StoriesSrvices } from './Stories.service';
 import { CreateStoryDTO } from './DTOs/CreateStory.DTO';
 
@@ -11,6 +19,10 @@ export class StoriesControllers {
     return this.storiesServices.getAllStories();
   }
 
+  @Get('get/:id')
+  public getStory(@Param('id', ParseIntPipe) id: number) {
+    return this.storiesServices.getStory(id);
+  }
   @Post('create')
   public createStory(@Body() dto: CreateStoryDTO) {
     return this.storiesServices.createStory(dto);

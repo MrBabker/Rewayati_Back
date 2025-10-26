@@ -12,12 +12,17 @@ export class StoriesSrvices {
   public async getAllStories() {
     return this.storyrepo.find({
       select: {
+        id: true,
         title: true,
         createdAt: true,
         creator: true,
         description: true,
       },
     });
+  }
+
+  public async getStory(id: number) {
+    return this.storyrepo.findOne({ where: { id: id } });
   }
 
   public async createStory(dto: CreateStoryDTO) {
