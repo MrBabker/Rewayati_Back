@@ -18,10 +18,10 @@ export class Story {
   @Column({ type: 'varchar' })
   description: string;
 
-  @Column({ type: 'simple-array' })
+  @Column({ type: 'jsonb' })
   subtitles: string[];
 
-  @Column({ type: 'simple-array' })
+  @Column({ type: 'jsonb' })
   subjects: string[];
 
   @CreateDateColumn({ type: 'timestamp', default: () => CURRENT_TIMESTAMP })
