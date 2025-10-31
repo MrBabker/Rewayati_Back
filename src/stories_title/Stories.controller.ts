@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -26,5 +27,10 @@ export class StoriesControllers {
   @Post('create')
   public createStory(@Body() dto: CreateStoryDTO) {
     return this.storiesServices.createStory(dto);
+  }
+
+  @Delete('del/:id')
+  public deleteStory(@Param('id', ParseIntPipe) id: number) {
+    return this.storiesServices.deleteStory(id);
   }
 }

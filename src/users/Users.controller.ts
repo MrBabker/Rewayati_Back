@@ -45,7 +45,7 @@ export class UserControllers {
 
     return {
       message: 'User Loged successfully welcom ',
-     /* payload: accsessToken.payload,*/
+      /* payload: accsessToken.payload,*/
     };
   }
 

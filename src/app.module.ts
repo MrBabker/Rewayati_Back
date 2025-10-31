@@ -7,6 +7,7 @@ import { User } from './users/entites/User.entite';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Story } from './stories_title/entites/Stories.Entity';
 import { StoriesModule } from './stories_title/StoriesTitle.module';
+import { EventsGateway } from './events/events.gateway';
 
 @Module({
   imports: [
@@ -30,6 +31,6 @@ import { StoriesModule } from './stories_title/StoriesTitle.module';
     StoriesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, EventsGateway],
 })
 export class AppModule {}

@@ -2,13 +2,17 @@ import { Repository } from 'typeorm';
 import { User } from './entites/User.entite';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RegistUserDTO } from './DTOs/RegistDTO';
-import { BadRequestException, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import bcrypt from 'node_modules/bcryptjs';
 import { plainToInstance } from 'class-transformer';
 import { JwtService } from '@nestjs/jwt';
 import { JWT_Payload } from 'src/utils';
 import { LoginUserDTO } from './DTOs/Login.DTO';
-
+@Injectable()
 export class UserServices {
   constructor(
     @InjectRepository(User) private readonly userrepo: Repository<User>,
