@@ -12,6 +12,8 @@ import { plainToInstance } from 'class-transformer';
 import { JwtService } from '@nestjs/jwt';
 import { JWT_Payload } from 'src/utils';
 import { LoginUserDTO } from './DTOs/Login.DTO';
+import { join } from 'node:path';
+import { unlinkSync } from 'node:fs';
 @Injectable()
 export class UserServices {
   constructor(
@@ -45,6 +47,7 @@ export class UserServices {
       username: newU.username,
       email: newU.email,
       isvalidate: newU.isvalidate,
+      image: newU.image,
       createdAt: newU.createdAt,
       updatedAt: newU.updatedAt,
     };
@@ -68,6 +71,7 @@ export class UserServices {
         username: user.username,
         email: user.email,
         isvalidate: user.isvalidate,
+        image: user.image,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       };
@@ -75,6 +79,33 @@ export class UserServices {
       const accsessToken = await this.jwtServices.signAsync(payload);
 
       return accsessToken;
+    }
+  }
+
+  public async RemoveImage(id: number) {
+    const user = await this.userrepo.findOne({ where: { id: id } });
+    if (user) {
+      if (user.image === null)
+        throw new BadRequestException('you already dont have image');
+      const imagePath = join(process.cwd(), `images/profile/${user.image}`);
+      unlinkSync(imagePath);
+      user.image = null;
+      return this.userrepo.save(user);
+    }
+  }
+
+  public async SetImage(id: number, mealImage: string) {
+    const user = await this.userrepo.findOne({ where: { id: id } });
+    if (user) {
+      if (user.image === null) {
+        user.image = mealImage;
+      } else {
+        await this.RemoveImage(id);
+        // meal.image = `${DOMAIN}/api/meals/${mealImage}`;
+        user.image = mealImage;
+      }
+
+      return this.userrepo.save(user);
     }
   }
 }

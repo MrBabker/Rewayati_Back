@@ -23,6 +23,9 @@ export class User {
   @Column({ type: 'varchar' })
   password: string;
 
+  @Column({ type: 'varchar', nullable: true })
+  image: string | null;
+
   @Column({ type: 'boolean', default: false })
   isvalidate: boolean;
 
